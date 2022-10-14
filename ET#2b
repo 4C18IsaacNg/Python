@@ -1,0 +1,97 @@
+# Return True if the queue is empty
+def isEmpty():    
+    return head ==-1
+ 
+
+# Retutn True if the queue is full
+def isFull():
+    return head==(tail+1)%len
+
+
+# Function to add an item to end of the queue
+def add(item):
+    global queue, tail, head, len          #required in Python if we're modifying a global variable    
+    if isFull():   
+        print("Error: Queue is full.")  
+    elif isEmpty() :
+       head = 0
+       tail = 0
+       queue[tail]=item
+       print(f'Added {item} OK!') 
+    else:
+        tail = (tail+1)%len
+        queue[tail] = item    
+    
+    
+  
+
+# Function to remove the front item from the queue
+def remove():
+    global queue, tail, head, len
+    if isEmpty():
+        print('Error: Nothing to remove. Queue is already empty.')
+        return None
+    elif head==tail:
+        temp=queue[head]
+        head=-1
+        tail=-1
+        return temp
+    else:
+        temp=queue[head]
+        head=(head+1)%len    
+        return temp
+    
+# Function to return the number of items in the queue
+def size():
+    return tail - head + 1
+
+
+# Function to return the front item without removing it from the queue
+def peek():    
+    if isEmpty():
+        return None
+    return queue[head]
+
+
+# Function to print the queue contents
+def printQueue():
+    if isEmpty():
+        print('Queue is empty')
+    else:        
+        for i in range(head, head+size()):
+            print(f'{queue[i]} ', end=' ')    
+    print()
+
+
+
+'''
+Global variables
+'''
+len = 6                  #set queue_size here
+queue = [None]*10000            #build a very long list
+tail = -1                       #front pointing to the first item of the queue
+head = -1                        #end pointing to the last item of the queue, end < front if queue is empty
+
+
+'''
+Driver code - test the queue operations here
+'''
+add('a')
+add('b')
+add('c')
+printQueue()
+print('Dequeue:', remove())
+printQueue()
+
+add('d')
+add('e')
+add('f')
+add('g')
+printQueue()
+
+print('Dequeue:', remove())
+add('g')
+printQueue()
+
+
+print(f'The front item: {peek()}')
